@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comparación entre Materiales Convencionales y Sostenibles</title>
+    
+    <!-- Importación de la fuente Poppins -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-color: #054C50;      /* Color de los encabezados */
+            --primary-hover: #033437;
+            --bg-light: #E8F3F3;            /* Fondo menta claro para filas par */
+            --bg-white: #ffffff;
+            --text-color: #2c3e50;          /* Texto principal */
+            --border-color: #D2E5E6;        /* Bordes finos y suaves */
+            --highlight-purple: #4a154b;    /* Púrpura para "Impacto en salud" */
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f4f8f8;
+            margin: 0;
+            padding: 40px 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            box-sizing: border-box;
+            overflow-x: hidden;
+        }
+
+        .table-container {
+            width: 100%;
+            max-width: 1100px;
+            box-shadow: 0 12px 40px rgba(5, 76, 80, 0.12);
+            border-radius: 8px;
+            overflow: hidden;
+            background-color: var(--bg-white);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            table-layout: fixed;
+        }
+
+        /* Styling the header cells */
+        th {
+            background-color: var(--primary-color);
+            color: #ffffff;
+            font-weight: 700;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            padding: 16px 20px;
+            text-align: center;
+            vertical-align: middle;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        /* Body cell styling */
+        td {
+            padding: 16px 20px;
+            font-size: 13.5px;
+            color: var(--text-color);
+            border: 1px solid var(--border-color);
+            line-height: 1.5;
+            vertical-align: middle;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+
+        /* Column ratios (Criterio 25%, Convencionales 37.5%, Sostenibles 37.5%) */
+        th:nth-child(1), td:nth-child(1) {
+            width: 25%;
+            font-weight: 500;
+        }
+
+        th:nth-child(2), td:nth-child(2) {
+            width: 37.5%;
+        }
+
+        th:nth-child(3), td:nth-child(3) {
+            width: 37.5%;
+        }
+
+        /* Zebra striping for table rows */
+        tbody tr:nth-child(even) td {
+            background-color: var(--bg-light);
+        }
+
+        tbody tr:nth-child(odd) td {
+            background-color: var(--bg-white);
+        }
+
+        /* Resaltado especial del criterio 'Impacto en salud' */
+        .highlight-health-text {
+            color: var(--highlight-purple) !important;
+            font-weight: 600;
+        }
+
+        @keyframes whipRow {
+            0% {
+                opacity: 0;
+                transform: translateX(-120px) scaleX(1.15) skewX(12deg);
+            }
+            60% {
+                opacity: 1;
+                transform: translateX(20px) scaleX(0.92) skewX(-4deg);
+            }
+            80% {
+                transform: translateX(-8px) scaleX(1.03) skewX(1.5deg);
+            }
+            100% {
+                opacity: 1;
+                transform: translateX(0) scaleX(1) skewY(0deg);
+            }
+        }
+
+        tbody tr {
+            opacity: 0;
+            animation: whipRow 0.75s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+        }
+
+        /* Staggered animation delays for the 7 rows */
+        tbody tr:nth-child(1) { animation-delay: 0.08s; }
+        tbody tr:nth-child(2) { animation-delay: 0.16s; }
+        tbody tr:nth-child(3) { animation-delay: 0.24s; }
+        tbody tr:nth-child(4) { animation-delay: 0.32s; }
+        tbody tr:nth-child(5) { animation-delay: 0.40s; }
+        tbody tr:nth-child(6) { animation-delay: 0.48s; }
+        tbody tr:nth-child(7) { animation-delay: 0.56s; }
+
+        /* Hover effect across rows */
+        tbody tr:hover td {
+            background-color: rgba(5, 76, 80, 0.08) !important;
+            transition: background-color 0.15s ease;
+            cursor: default;
+        }
+
+        .controls-container {
+            margin-top: 28px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .play-btn {
+            background: linear-gradient(135deg, #076469 0%, #054C50 100%);
+            color: #ffffff;
+            border: none;
+            padding: 10px 28px;
+            border-radius: 25px;
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            outline: none;
+            box-shadow: 0 4px 15px rgba(5, 76, 80, 0.25);
+        }
+
+        .play-btn .icon {
+            font-size: 13px;
+            transition: transform 0.2s ease;
+        }
+
+        .play-btn:hover {
+            transform: translateY(-2px);
+            background: linear-gradient(135deg, #097B81 0%, #033437 100%);
+            box-shadow: 0 6px 20px rgba(5, 76, 80, 0.35);
+        }
+
+        .play-btn:hover .icon {
+            transform: scale(1.15);
+        }
+
+        .play-btn:active {
+            transform: translateY(1px);
+            box-shadow: 0 2px 8px rgba(5, 76, 80, 0.2);
+        }
+
+        .hint {
+            font-size: 13.5px;
+            color: #555555;
+            background-color: #ffffff;
+            padding: 6px 18px;
+            border-radius: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+            border: 1px solid #dce8e8;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>CRITERIO</th>
+                    <th>MATERIALES CONVENCIONALES</th>
+                    <th>MATERIALES SOSTENIBLES</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Fila 1 -->
+                <tr>
+                    <td>Impacto ambiental</td>
+                    <td>Alto (emisiones de CO₂, extracción intensiva de recursos)</td>
+                    <td>Bajo a moderado (menor huella de carbono, uso de recursos renovables)</td>
+                </tr>
+                <!-- Fila 2 -->
+                <tr>
+                    <td>Energía de producción</td>
+                    <td>Elevada (procesos industriales intensivos)</td>
+                    <td>Reducida (procesos naturales o de baja transformación)</td>
+                </tr>
+                <!-- Fila 3 -->
+                <tr>
+                    <td>Durabilidad</td>
+                    <td>Alta en muchos casos (concreto, acero)</td>
+                    <td>Variable, pero adecuada si se diseñan correctamente</td>
+                </tr>
+                <!-- Fila 4 -->
+                <tr>
+                    <td>Costo inicial</td>
+                    <td>Generalmente estable y conocido</td>
+                    <td>Puede ser menor o competitivo dependiendo del contexto local</td>
+                </tr>
+                <!-- Fila 5 -->
+                <tr>
+                    <td>Disponibilidad</td>
+                    <td>Amplia distribución comercial</td>
+                    <td>Depende de la región (mayor uso de materiales locales)</td>
+                </tr>
+                <!-- Fila 6 (Resaltado púrpura en el criterio 'Impacto en salud') -->
+                <tr>
+                    <td class="highlight-health-text">Impacto en salud</td>
+                    <td>Puede generar contaminantes (polvo, compuestos químicos)</td>
+                    <td>Menor toxicidad, mejor calidad del aire interior</td>
+                </tr>
+                <!-- Fila 7 -->
+                <tr>
+                    <td>Fin de vida útil</td>
+                    <td>Difícil reciclaje en algunos casos</td>
+                    <td>Reutilizables, reciclables o biodegradables</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="controls-container">
+        <button class="play-btn" id="restartBtn" title="Reiniciar animación">
+            <span class="icon">▶</span>
+            <span>Reiniciar</span>
+        </button>
+        <div class="hint">Haga clic sobre el botón "▶" para reiniciar la animación.</div>
+    </div>
+
+    <script>
+        function triggerWhipAnimation() {
+            const tableContainer = document.querySelector('.table-container');
+            
+            // Ocultamos temporalmente para reiniciar las animaciones CSS
+            tableContainer.style.display = 'none';
+            
+            // Forzamos un reflow en el DOM
+            void tableContainer.offsetWidth; 
+            
+            // Mostramos de nuevo para disparar el efecto látigo escalonado
+            tableContainer.style.display = 'block';
+        }
+
+        document.getElementById('restartBtn').addEventListener('click', triggerWhipAnimation);
+    </script>
+</body>
+</html>
