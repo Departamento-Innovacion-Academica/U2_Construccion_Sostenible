@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clasificación de Materiales Sostenibles</title>
+    <!-- Importación de la fuente Poppins -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-color: #054C50;
+            --primary-hover: #033437;
+            --bg-light: #E8F3F3;
+            --bg-white: #ffffff;
+            --text-color: #2c3e50;
+            --border-color: #D2E5E6;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f4f8f8;
+            margin: 0;
+            padding: 40px 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            box-sizing: border-box;
+            overflow-x: hidden;
+        }
+
+        .grid-container {
+            width: 100%;
+            max-width: 1100px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .card {
+            background-color: var(--bg-white);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 12px 30px rgba(5, 76, 80, 0.08);
+            border: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            opacity: 0;
+            animation: whipCard 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+        }
+
+        .card-header {
+            background-color: var(--primary-color);
+            color: var(--bg-white);
+            font-weight: 600;
+            font-size: 15px;
+            letter-spacing: 0.5px;
+            padding: 16px 20px;
+            text-align: center;
+            text-transform: uppercase;
+        }
+
+        .card-body {
+            padding: 20px 24px;
+            flex-grow: 1;
+            background-color: var(--bg-white);
+        }
+
+        .card-body ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .card-body li {
+            font-size: 13.5px;
+            color: var(--text-color);
+            line-height: 1.6;
+            margin-bottom: 12px;
+            position: relative;
+            padding-left: 18px;
+        }
+
+        .card-body li:last-child {
+            margin-bottom: 0;
+        }
+
+        .card-body li::before {
+            content: "•";
+            color: var(--primary-color);
+            font-weight: bold;
+            font-size: 18px;
+            position: absolute;
+            left: 0;
+            top: -2px;
+        }
+
+        .card-body strong {
+            color: #111111;
+            font-weight: 600;
+        }
+
+        /* --- ANIMACIÓN WHIP EFECTO LÁTIGO --- */
+        @keyframes whipCard {
+            0% {
+                opacity: 0;
+                transform: translateY(-80px) scaleY(1.2) skewY(-3deg);
+            }
+            60% {
+                opacity: 1;
+                transform: translateY(15px) scaleY(0.9) skewY(2deg);
+            }
+            80% {
+                transform: translateY(-5px) scaleY(1.02) skewY(-0.5deg);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) scaleY(1) skewY(0deg);
+            }
+        }
+
+        /* Delays secuenciales para las tarjetas */
+        .card:nth-child(1) { animation-delay: 0.1s; }
+        .card:nth-child(2) { animation-delay: 0.25s; }
+        .card:nth-child(3) { animation-delay: 0.4s; }
+        .card:nth-child(4) { animation-delay: 0.55s; }
+
+        /* Hover interactivo */
+        .card:hover {
+            box-shadow: 0 16px 35px rgba(5, 76, 80, 0.15);
+            transition: box-shadow 0.3s ease;
+        }
+
+        /* --- CONTROLES --- */
+        .controls-container {
+            margin-top: 28px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .play-btn {
+            background: linear-gradient(135deg, #076469 0%, #054C50 100%);
+            color: #ffffff;
+            border: none;
+            padding: 10px 28px;
+            border-radius: 25px;
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            outline: none;
+            box-shadow: 0 4px 15px rgba(5, 76, 80, 0.25);
+        }
+
+        .play-btn .icon {
+            font-size: 13px;
+            transition: transform 0.2s ease;
+        }
+
+        .play-btn:hover {
+            transform: translateY(-2px);
+            background: linear-gradient(135deg, #097B81 0%, #033437 100%);
+            box-shadow: 0 6px 20px rgba(5, 76, 80, 0.35);
+        }
+
+        .play-btn:hover .icon {
+            transform: scale(1.15);
+        }
+
+        .play-btn:active {
+            transform: translateY(1px);
+            box-shadow: 0 2px 8px rgba(5, 76, 80, 0.2);
+        }
+
+        .hint {
+            font-size: 13.5px;
+            color: #555555;
+            background-color: #ffffff;
+            padding: 6px 18px;
+            border-radius: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+            border: 1px solid #dce8e8;
+        }
+
+        @media (max-width: 768px) {
+            .grid-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="grid-container">
+        <!-- Tarjeta 1 -->
+        <div class="card">
+            <div class="card-header">Materiales Naturales</div>
+            <div class="card-body">
+                <ul>
+                    <li><strong>Madera y derivados:</strong> Madera, madera certificada FSC, madera laminada cruzada (CLT).</li>
+                    <li><strong>Tierra y mampostería tradicional:</strong> Adobe, tapia pisada, bahareque, tierra estabilizada, bloques de tierra comprimida (BTC).</li>
+                    <li><strong>Fibras y vegetales:</strong> Bambú, guadua, paja, fibra de coco, sisal, fique, caña brava, palma.</li>
+                    <li><strong>Aislantes orgánicos:</strong> Corcho, lana de oveja, algodón, lino.</li>
+                    <li><strong>Minerales y aglomerantes:</strong> Cal, yeso natural.</li>
+                    <li><strong>Subproductos agrícolas:</strong> Cáscara de arroz, cáscara de café, cáscara de maní, bagazo de caña.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Tarjeta 2 -->
+        <div class="card">
+            <div class="card-header">Materiales Reciclados</div>
+            <div class="card-body">
+                <ul>
+                    <li><strong>Concretos y aglomerados:</strong> Concreto reciclado, concreto con cenizas volantes, concreto con escoria de alto horno.</li>
+                    <li><strong>Metales y vidrio:</strong> Acero reciclado, aluminio reciclado, vidrio reciclado.</li>
+                    <li><strong>Plásticos y polímeros:</strong> Plástico reciclado, madera plástica, polietileno reciclado, polipropileno reciclado.</li>
+                    <li><strong>Elementos constructivos:</strong> Ladrillos reciclados, bloques de plástico reciclado, tejas de plástico reciclado, tejas de caucho reciclado.</li>
+                    <li><strong>Aislantes y fibras:</strong> Celulosa reciclada, algodón reciclado, aislantes de lana mineral reciclada.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Tarjeta 3 -->
+        <div class="card">
+            <div class="card-header">Materiales Innovadores</div>
+            <div class="card-body">
+                <ul>
+                    <li><strong>Bioconcretos y cementos ecológicos:</strong> Hempcrete (bioconcreto de cáñamo), geopolímeros, eco-cemento, morteros de cal, morteros ecológicos.</li>
+                    <li><strong>Bloques y sistemas de paneles:</strong> Bloques de cáñamo, paneles SIP ecológicos, paneles de fibras vegetales, paneles OSB ecológicos, paneles de celulosa, paneles de corcho, paneles de bambú.</li>
+                    <li><strong>Acabados, pinturas y adhesivos:</strong> Pinturas ecológicas, pinturas minerales, pinturas a base de arcilla, barnices naturales, aceites naturales, resinas vegetales, adhesivos naturales.</li>
+                    <li><strong>Aislamientos y cubiertas avanzadas:</strong> Aislantes (de corcho, celulosa, fibra de madera, cáñamo, algodón), tejas de fibra vegetal, cubiertas verdes.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Tarjeta 4 -->
+        <div class="card">
+            <div class="card-header">Materiales Locales (en Colombia)</div>
+            <div class="card-body">
+                <ul>
+                    <li><strong>Estructurales y tierra:</strong> Guadua, bambú, bahareque, tapia pisada, adobe, madera local, bloques de tierra comprimida (BTC), cal.</li>
+                    <li><strong>Fibras autóctonas:</strong> Fique, caña brava, palma, fibra de coco.</li>
+                    <li><strong>Aprovechamiento agroindustrial:</strong> Cáscara de café, bagazo de caña.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Contenedor de Controles -->
+    <div class="controls-container">
+        <button class="play-btn" id="restartBtn" title="Reiniciar animación">
+            <span class="icon">▶</span>
+            <span>Reiniciar</span>
+        </button>
+        <div class="hint">Haga clic sobre el botón "▶" para reiniciar la animación.</div>
+    </div>
+
+    <!-- Script de Reinicio -->
+    <script>
+        function triggerWhipAnimation() {
+            const gridContainer = document.querySelector('.grid-container');
+            
+            gridContainer.style.display = 'none';
+            void gridContainer.offsetWidth; 
+            gridContainer.style.display = 'grid';
+        }
+
+        document.getElementById('restartBtn').addEventListener('click', triggerWhipAnimation);
+    </script>
+</body>
+</html>
