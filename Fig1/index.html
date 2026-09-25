@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Impacto Ambiental y Sostenibilidad</title>
+    
+    <!-- Fuente Poppins -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome CDN para iconos vectoriales -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+        :root {
+            --bg-page: #ffffff;
+            --box-bg: #f2f2f0;        /* Gris claro suave para los contenedores */
+            --text-color: #1a1a1a;     /* Texto negro/oscuro */
+            --teal-arrow: #087f8c;    /* Verde azulado para las flechas curvas */
+            --btn-bg: #054C50;        /* Morado para el botón principal */
+            --btn-hover: #007279;     /* Morado más oscuro al pasar el cursor */
+            --card-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-page);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            min-height: 100vh;
+            padding: 40px 20px 80px 20px;
+            overflow-x: hidden;
+        }
+
+        /* --- Zona de Control --- */
+        .controls-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 40px;
+            text-align: center;
+            z-index: 10;
+        }
+
+        .instruction-text {
+            font-size: 0.95rem;
+            color: #555;
+            font-weight: 500;
+        }
+
+        .btn-reset {
+            background-color: var(--btn-bg);
+            color: #ffffff;
+            border: none;
+            padding: 10px 26px;
+            font-size: 0.95rem;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: background-color 0.2s ease, transform 0.1s ease, box-shadow 0.2s ease;
+            box-shadow: 0 4px 12px rgba(53, 112, 109, 0.3);
+        }
+
+        .btn-reset:hover {
+            background-color: var(--btn-hover);
+            box-shadow: 0 6px 16px rgba(23, 109, 131, 0.4);
+        }
+
+        .btn-reset:active {
+            transform: scale(0.96);
+        }
+
+        /* --- Contenedor Relativo Principal --- */
+        .diagram-wrapper {
+            position: relative;
+            max-width: 680px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 28px;
+        }
+
+        /* SVG para Flechas Curvas */
+        .arrows-svg-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .curved-arrow {
+            fill: none;
+            stroke: var(--teal-arrow);
+            stroke-width: 3.5;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            opacity: 0;
+        }
+
+        /* --- Filas del Diagrama --- */
+        .diagram-row {
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            z-index: 2;
+            opacity: 0;
+        }
+
+        /* Cuadro de Icono (Izquierda) */
+        .icon-box {
+            width: 120px;
+            height: 120px;
+            background-color: var(--box-bg);
+            border-radius: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            box-shadow: var(--card-shadow);
+            position: relative;
+        }
+
+        .icon-content {
+            font-size: 58px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Estilizado particular de iconos */
+        .icon-bulb { color: #4CAF50; }
+        .icon-co2 { 
+            color: #2E7D32; 
+            font-weight: 800;
+            font-size: 42px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            line-height: 1;
+        }
+        .icon-co2 i {
+            font-size: 26px;
+            margin-top: 2px;
+        }
+        .icon-recycle { color: #2E7D32; font-size: 64px; }
+        .icon-clock { 
+            color: #1a1a1a; 
+            position: relative;
+        }
+        .icon-clock .badge-check {
+            position: absolute;
+            color: #2E7D32;
+            font-size: 28px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: #ffffff;
+            border-radius: 50%;
+            padding: 2px;
+        }
+        .icon-hand { color: #d97706; }
+        .icon-house { color: #65a30d; }
+
+        /* Tarjeta Contenedora de Texto (Derecha) */
+        .text-card {
+            flex: 1;
+            background-color: var(--box-bg);
+            border-radius: 18px;
+            padding: 24px 28px;
+            min-height: 120px;
+            display: flex;
+            align-items: center;
+            box-shadow: var(--card-shadow);
+        }
+
+        .text-card p {
+            font-size: 1.05rem;
+            font-weight: 500;
+            color: var(--text-color);
+            line-height: 1.45;
+        }
+
+        /* --- Animación Látigo (WhipIn) --- */
+        .animate-whip {
+            animation: whipIn 0.8s cubic-bezier(0.68, -0.6, 0.32, 1.6) forwards;
+        }
+
+        @keyframes whipIn {
+            0% {
+                opacity: 0;
+                transform: translateX(-120px) scaleX(1.3) skewX(-15deg);
+            }
+            70% {
+                opacity: 1;
+                transform: translateX(12px) scaleX(0.96) skewX(4deg);
+            }
+            100% {
+                opacity: 1;
+                transform: translateX(0) scaleX(1) skewX(0deg);
+            }
+        }
+
+        /* Delays escalonados para las 6 filas y las 5 flechas */
+        .delay-row-1 { animation-delay: 0.05s; }
+        .delay-arrow-1 { animation-delay: 0.20s; }
+        
+        .delay-row-2 { animation-delay: 0.30s; }
+        .delay-arrow-2 { animation-delay: 0.45s; }
+
+        .delay-row-3 { animation-delay: 0.55s; }
+        .delay-arrow-3 { animation-delay: 0.70s; }
+
+        .delay-row-4 { animation-delay: 0.80s; }
+        .delay-arrow-4 { animation-delay: 0.95s; }
+
+        .delay-row-5 { animation-delay: 1.05s; }
+        .delay-arrow-5 { animation-delay: 1.20s; }
+
+        .delay-row-6 { animation-delay: 1.30s; }
+
+        /* --- Responsividad --- */
+        @media (max-width: 640px) {
+            .arrows-svg-container {
+                display: none; /* Se ocultan las flechas curvas complejas en móvil */
+            }
+
+            .diagram-row {
+                flex-direction: column;
+                gap: 12px;
+                text-align: center;
+            }
+
+            .icon-box {
+                width: 100px;
+                height: 100px;
+            }
+
+            .text-card {
+                width: 100%;
+                min-height: auto;
+                padding: 18px 20px;
+                text-align: center;
+                justify-content: center;
+            }
+
+            @keyframes whipIn {
+                0% {
+                    opacity: 0;
+                    transform: translateY(-50px) scaleY(1.2);
+                }
+                70% {
+                    opacity: 1;
+                    transform: translateY(8px) scaleY(0.98);
+                }
+                100% {
+                    opacity: 1;
+                    transform: translateY(0) scaleY(1);
+                }
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Zona de Control -->
+    <div class="controls-container">
+        <p class="instruction-text">Haga clic sobre el botón "Reiniciar ▶" para reiniciar la animación.</p>
+        <button class="btn-reset" onclick="resetAnimation()">Reiniciar ▶</button>
+    </div>
+
+    <!-- Envoltorio del Diagrama Vertical -->
+    <div class="diagram-wrapper" id="diagram-wrapper">
+        
+        <!-- SVG para Dibujar las Flechas Curvas Lateralmente -->
+        <svg class="arrows-svg-container" id="arrows-svg">
+            <defs>
+                <!-- Definición de Punta de Flecha Teal -->
+                <marker id="arrowhead" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+                    <path d="M 0 1 L 10 5 L 0 9 z" fill="#087f8c" />
+                </marker>
+            </defs>
+
+            <!-- Flechas dinámicas generadas/posicionadas por JS -->
+            <path id="arrow-1" class="curved-arrow delay-arrow-1" marker-end="url(#arrowhead)" />
+            <path id="arrow-2" class="curved-arrow delay-arrow-2" marker-end="url(#arrowhead)" />
+            <path id="arrow-3" class="curved-arrow delay-arrow-3" marker-end="url(#arrowhead)" />
+            <path id="arrow-4" class="curved-arrow delay-arrow-4" marker-end="url(#arrowhead)" />
+            <path id="arrow-5" class="curved-arrow delay-arrow-5" marker-end="url(#arrowhead)" />
+        </svg>
+
+        <!-- Fila 1: Bombilla / Consumo Energético -->
+        <div class="diagram-row animate-whip delay-row-1" id="row-1">
+            <div class="icon-box">
+                <div class="icon-content icon-bulb">
+                    <i class="fa-solid fa-lightbulb"></i>
+                </div>
+            </div>
+            <div class="text-card">
+                <p>Bajo consumo energético en su proceso de producción.</p>
+            </div>
+        </div>
+
+        <!-- Fila 2: CO2 -->
+        <div class="diagram-row animate-whip delay-row-2" id="row-2">
+            <div class="icon-box">
+                <div class="icon-content icon-co2">
+                    <i class="fa-solid fa-cloud-arrow-down"></i>
+                    <span>CO₂</span>
+                </div>
+            </div>
+            <div class="text-card">
+                <p>Reducción de emisiones de dióxido de carbono (CO₂).</p>
+            </div>
+        </div>
+
+        <!-- Fila 3: Reciclaje / Materias Primas -->
+        <div class="diagram-row animate-whip delay-row-3" id="row-3">
+            <div class="icon-box">
+                <div class="icon-content icon-recycle">
+                    <i class="fa-solid fa-recycle"></i>
+                </div>
+            </div>
+            <div class="text-card">
+                <p>Uso de materias primas renovables, recicladas o de bajo impacto ambiental.</p>
+            </div>
+        </div>
+
+        <!-- Fila 4: Reloj / Durabilidad -->
+        <div class="diagram-row animate-whip delay-row-4" id="row-4">
+            <div class="icon-box">
+                <div class="icon-content icon-clock">
+                    <i class="fa-regular fa-clock"></i>
+                    <i class="fa-solid fa-circle-check badge-check"></i>
+                </div>
+            </div>
+            <div class="text-card">
+                <p>Alta durabilidad, lo que reduce la necesidad de reemplazo frecuente.</p>
+            </div>
+        </div>
+
+        <!-- Fila 5: Basura / Reutilización -->
+        <div class="diagram-row animate-whip delay-row-5" id="row-5">
+            <div class="icon-box">
+                <div class="icon-content icon-hand">
+                    <i class="fa-solid fa-dumpster"></i>
+                </div>
+            </div>
+            <div class="text-card">
+                <p>Posibilidad de reutilización, reciclaje o disposición final responsable.</p>
+            </div>
+        </div>
+
+        <!-- Fila 6: Casa / Salud Humana -->
+        <div class="diagram-row animate-whip delay-row-6" id="row-6">
+            <div class="icon-box">
+                <div class="icon-content icon-house">
+                    <i class="fa-solid fa-tree-city"></i>
+                </div>
+            </div>
+            <div class="text-card">
+                <p>Bajo impacto en la salud humana y en la calidad del aire interior.</p>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // Función para calcular y renderizar las 5 flechas curvas laterales en el SVG
+        function updateArrowPaths() {
+            const wrapper = document.getElementById('diagram-wrapper');
+            const wrapperRect = wrapper.getBoundingClientRect();
+
+            const rows = [
+                document.getElementById('row-1'),
+                document.getElementById('row-2'),
+                document.getElementById('row-3'),
+                document.getElementById('row-4'),
+                document.getElementById('row-5'),
+                document.getElementById('row-6')
+            ];
+
+            const arrows = [
+                document.getElementById('arrow-1'),
+                document.getElementById('arrow-2'),
+                document.getElementById('arrow-3'),
+                document.getElementById('arrow-4'),
+                document.getElementById('arrow-5')
+            ];
+
+            // Flecha 1: Derecha (Fila 1 -> Fila 2)
+            drawCurvedArrow(arrows[0], rows[0], rows[1], wrapperRect, 'right');
+
+            // Flecha 2: Izquierda (Fila 2 -> Fila 3)
+            drawCurvedArrow(arrows[1], rows[1], rows[2], wrapperRect, 'left');
+
+            // Flecha 3: Derecha (Fila 3 -> Fila 4)
+            drawCurvedArrow(arrows[2], rows[2], rows[3], wrapperRect, 'right');
+
+            // Flecha 4: Izquierda (Fila 4 -> Fila 5)
+            drawCurvedArrow(arrows[3], rows[3], rows[4], wrapperRect, 'left');
+
+            // Flecha 5: Derecha (Fila 5 -> Fila 6)
+            drawCurvedArrow(arrows[4], rows[4], rows[5], wrapperRect, 'right');
+        }
+
+        function drawCurvedArrow(pathElem, topRow, bottomRow, wrapperRect, side) {
+            if (!pathElem || !topRow || !bottomRow) return;
+
+            const topRect = topRow.getBoundingClientRect();
+            const bottomRect = bottomRow.getBoundingClientRect();
+
+            let startX, startY, endX, endY, controlX;
+
+            if (side === 'right') {
+                // Lado derecho (conecta el extremo derecho de las tarjetas de texto)
+                startX = topRect.right - wrapperRect.left + 8;
+                startY = (topRect.top + topRect.bottom) / 2 - wrapperRect.top - 10;
+                endX = bottomRect.right - wrapperRect.left + 8;
+                endY = (bottomRect.top + bottomRect.bottom) / 2 - wrapperRect.top - 5;
+                controlX = Math.max(startX, endX) + 45;
+            } else {
+                // Lado izquierdo (conecta el extremo izquierdo de las cajas de iconos)
+                startX = topRect.left - wrapperRect.left - 8;
+                startY = (topRect.top + topRect.bottom) / 2 - wrapperRect.top - 10;
+                endX = bottomRect.left - wrapperRect.left - 8;
+                endY = (bottomRect.top + bottomRect.bottom) / 2 - wrapperRect.top - 5;
+                controlX = Math.min(startX, endX) - 45;
+            }
+
+            // Crear el comando Bézier Cúbico (Curva suave)
+            const d = `M ${startX} ${startY} C ${controlX} ${startY}, ${controlX} ${endY}, ${endX} ${endY}`;
+            pathElem.setAttribute('d', d);
+        }
+
+        // Función para reiniciar las animaciones
+        function resetAnimation() {
+            const animatedRows = document.querySelectorAll('.diagram-row');
+            const animatedArrows = document.querySelectorAll('.curved-arrow');
+
+            animatedRows.forEach(el => {
+                el.classList.remove('animate-whip');
+                void el.offsetWidth; // Trigger reflow
+                el.classList.add('animate-whip');
+            });
+
+            animatedArrows.forEach(el => {
+                el.classList.remove('animate-whip');
+                void el.offsetWidth; // Trigger reflow
+                el.classList.add('animate-whip');
+            });
+        }
+
+        // Inicializar rutas al cargar y al cambiar tamaño de pantalla
+        window.addEventListener('load', () => {
+            updateArrowPaths();
+            // Iniciar animación en las flechas también al cargar
+            document.querySelectorAll('.curved-arrow').forEach(el => {
+                el.classList.add('animate-whip');
+            });
+        });
+
+        window.addEventListener('resize', updateArrowPaths);
+    </script>
+
+</body>
+</html>
