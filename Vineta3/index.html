@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Criterios de Selección de Materiales Sostenibles</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* Light Theme Glassmorphism - Deep Forest Accent */
+            --bg-body: #f1f7f4;
+            --bg-gradient-1: rgba(6, 78, 59, 0.12);
+            --bg-gradient-2: rgba(4, 47, 36, 0.18);
+            --bg-glow: rgba(16, 185, 129, 0.25);
+            
+            --glass-bg: rgba(255, 255, 255, 0.65);
+            --glass-border: rgba(6, 78, 59, 0.22);
+            --glass-shadow: 0 8px 32px 0 rgba(6, 78, 59, 0.1);
+            --glass-backdrop: blur(16px);
+            
+            --card-accent-border: #064e3b; /* Deep Forest Green */
+            --text-title: #022c22;
+            --text-body: #1e293b;
+            --text-muted: #475569;
+            
+            --accent-green: #064e3b;
+            --accent-green-hover: #04382a;
+            
+            --modal-overlay-bg: rgba(2, 44, 34, 0.45);
+            --modal-bg: rgba(255, 255, 255, 0.88);
+            --close-btn-bg: rgba(6, 78, 59, 0.1);
+            --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        [data-theme="dark"] {
+            /* Dark Theme Glassmorphism - Dark Emerald/Forest */
+            --bg-body: #021a14;
+            --bg-gradient-1: rgba(6, 78, 59, 0.35);
+            --bg-gradient-2: rgba(4, 47, 36, 0.5);
+            --bg-glow: rgba(16, 185, 129, 0.15);
+            
+            --glass-bg: rgba(6, 35, 26, 0.65);
+            --glass-border: rgba(52, 211, 153, 0.25);
+            --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
+            --glass-backdrop: blur(16px);
+            
+            --card-accent-border: #10b981;
+            --text-title: #a7f3d0;
+            --text-body: #e2e8f0;
+            --text-muted: #94a3b8;
+            
+            --accent-green: #34d399;
+            --accent-green-hover: #6ee7b7;
+            
+            --modal-overlay-bg: rgba(1, 15, 11, 0.75);
+            --modal-bg: rgba(6, 35, 26, 0.92);
+            --close-btn-bg: rgba(52, 211, 153, 0.15);
+        }
+
+        body {
+            background-color: var(--bg-body);
+            background-image: 
+                radial-gradient(circle at 15% 15%, var(--bg-glow) 0%, transparent 40%),
+                radial-gradient(circle at 85% 85%, var(--bg-gradient-1) 0%, transparent 45%),
+                radial-gradient(circle at 50% 50%, var(--bg-gradient-2) 0%, transparent 60%);
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            color: var(--text-body);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 95px 20px 40px;
+            box-sizing: border-box;
+            transition: var(--transition-smooth);
+        }
+
+        .top-bar {
+            position: fixed;
+            top: 20px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            z-index: 10;
+        }
+
+        .instruction {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            padding: 10px 24px;
+            border-radius: 9999px;
+            color: var(--text-title);
+            font-size: 0.85rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            animation: floatAnim 4s ease-in-out infinite;
+            backdrop-filter: var(--glass-backdrop);
+            -webkit-backdrop-filter: var(--glass-backdrop);
+            box-shadow: var(--glass-shadow);
+            transition: var(--transition-smooth);
+        }
+
+        .theme-toggle-btn {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            color: var(--text-title);
+            border-radius: 9999px;
+            padding: 10px 18px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            backdrop-filter: var(--glass-backdrop);
+            -webkit-backdrop-filter: var(--glass-backdrop);
+            box-shadow: var(--glass-shadow);
+            transition: var(--transition-smooth);
+        }
+
+        .theme-toggle-btn:hover {
+            transform: translateY(-2px);
+            border-color: var(--accent-green);
+        }
+
+        @keyframes floatAnim {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-5px);
+            }
+        }
+
+        .cards-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            max-width: 1100px;
+            width: 100%;
+        }
+
+        @media (max-width: 950px) {
+            .cards-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 650px) {
+            .cards-container {
+                grid-template-columns: 1fr;
+            }
+            .top-bar {
+                flex-direction: column;
+                gap: 8px;
+                top: 10px;
+            }
+            body {
+                padding-top: 130px;
+            }
+        }
+
+        .card {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-left: 5px solid var(--card-accent-border);
+            border-radius: 20px;
+            padding: 28px 24px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: flex-start;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+            backdrop-filter: var(--glass-backdrop);
+            -webkit-backdrop-filter: var(--glass-backdrop);
+            box-shadow: var(--glass-shadow);
+            min-height: 190px;
+            box-sizing: border-box;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.15), transparent);
+            pointer-events: none;
+        }
+
+        .card:hover {
+            border-color: var(--card-accent-border);
+            transform: translateY(-5px) scale(1.01);
+            box-shadow: 0 16px 40px 0 rgba(6, 78, 59, 0.2);
+        }
+
+        .card h3 {
+            margin: 0;
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--text-title);
+            line-height: 1.4;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            hyphens: auto;
+        }
+
+        .card .btn-open {
+            margin-top: 20px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: var(--accent-green);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: var(--transition-smooth);
+        }
+
+        .card:hover .btn-open {
+            color: var(--accent-green-hover);
+            transform: translateX(5px);
+        }
+
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: var(--modal-overlay-bg);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition-smooth);
+            z-index: 100;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-content {
+            background: var(--modal-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            max-width: 620px;
+            width: 100%;
+            max-height: 85vh;
+            overflow-y: auto;
+            padding: 36px 32px;
+            box-sizing: border-box;
+            position: relative;
+            transform: translateY(20px) scale(0.95);
+            transition: var(--transition-smooth);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.35);
+            backdrop-filter: var(--glass-backdrop);
+            -webkit-backdrop-filter: var(--glass-backdrop);
+        }
+
+        .modal-overlay.active .modal-content {
+            transform: translateY(0) scale(1);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: var(--close-btn-bg);
+            border: 1px solid var(--glass-border);
+            color: var(--text-muted);
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            font-size: 1.1rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: var(--transition-smooth);
+        }
+
+        .modal-close:hover {
+            background: var(--accent-green);
+            color: #ffffff;
+            border-color: var(--accent-green);
+        }
+
+        .modal-content h3 {
+            margin-top: 0;
+            margin-bottom: 20px;
+            font-size: 1.35rem;
+            font-weight: 700;
+            color: var(--text-title);
+            border-bottom: 2px solid var(--glass-border);
+            padding-bottom: 14px;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            hyphens: auto;
+        }
+
+        .modal-content p {
+            font-size: 1rem;
+            line-height: 1.7;
+            color: var(--text-body);
+            margin: 0;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            hyphens: auto;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="top-bar">
+        <div class="instruction">Haga clic sobre las tarjetas para ampliar la información</div>
+        <button class="theme-toggle-btn" id="themeToggleBtn" onclick="toggleTheme()">
+            <span id="themeIcon">🌙</span> <span id="themeText">Modo Oscuro</span>
+        </button>
+    </div>
+
+    <div class="cards-container">
+        
+        <!-- Card 1 -->
+        <div class="card" onclick="openModal('modal-1')">
+            <h3>Impacto ambiental</h3>
+            <div class="btn-open">Ver detalle ↗</div>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="card" onclick="openModal('modal-2')">
+            <h3>Disponibilidad local</h3>
+            <div class="btn-open">Ver detalle ↗</div>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="card" onclick="openModal('modal-3')">
+            <h3>Resistencia mecánica</h3>
+            <div class="btn-open">Ver detalle ↗</div>
+        </div>
+
+        <!-- Card 4 -->
+        <div class="card" onclick="openModal('modal-4')">
+            <h3>Costos</h3>
+            <div class="btn-open">Ver detalle ↗</div>
+        </div>
+
+        <!-- Card 5 -->
+        <div class="card" onclick="openModal('modal-5')">
+            <h3>Durabilidad</h3>
+            <div class="btn-open">Ver detalle ↗</div>
+        </div>
+
+        <!-- Card 6 -->
+        <div class="card" onclick="openModal('modal-6')">
+            <h3>Mantenimiento</h3>
+            <div class="btn-open">Ver detalle ↗</div>
+        </div>
+
+        <!-- Card 7 -->
+        <div class="card" onclick="openModal('modal-7')">
+            <h3>Compatibilidad con el diseño</h3>
+            <div class="btn-open">Ver detalle ↗</div>
+        </div>
+
+        <!-- Card 8 -->
+        <div class="card" onclick="openModal('modal-8')">
+            <h3>Resistencia al fuego</h3>
+            <div class="btn-open">Ver detalle ↗</div>
+        </div>
+
+        <!-- Card 9 -->
+        <div class="card" onclick="openModal('modal-9')">
+            <h3>Propiedades térmicas y acústicas</h3>
+            <div class="btn-open">Ver detalle ↗</div>
+        </div>
+
+    </div>
+
+    <!-- Modal 1 -->
+    <div class="modal-overlay" id="modal-1" onclick="closeModalOnOverlay(event, 'modal-1')">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal('modal-1')">✕</button>
+            <h3>Impacto ambiental</h3>
+            <p>Se refiere al efecto que genera el material durante todo su ciclo de vida (extracción, producción, transporte, uso y disposición final). Se priorizan materiales con baja huella de carbono, reciclables o provenientes de fuentes renovables (Viezzer & Biondi, 2021).</p>
+        </div>
+    </div>
+
+    <!-- Modal 2 -->
+    <div class="modal-overlay" id="modal-2" onclick="closeModalOnOverlay(event, 'modal-2')">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal('modal-2')">✕</button>
+            <h3>Disponibilidad local</h3>
+            <p>El uso de materiales disponibles en la región reduce costos de transporte, emisiones asociadas y fomenta el desarrollo económico local. Este criterio es especialmente relevante en contextos latinoamericanos (Reyes, Rigueiro, Silva, & Murtinho, 2018).</p>
+        </div>
+    </div>
+
+    <!-- Modal 3 -->
+    <div class="modal-overlay" id="modal-3" onclick="closeModalOnOverlay(event, 'modal-3')">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal('modal-3')">✕</button>
+            <h3>Resistencia mecánica</h3>
+            <p>Determina la capacidad del material para soportar cargas sin fallar. Algunos materiales sostenibles, como los bloques de tierra comprimida o el bambú, han demostrado comportamientos estructurales adecuados cuando son correctamente diseñados y tratados.</p>
+        </div>
+    </div>
+
+    <!-- Modal 4 -->
+    <div class="modal-overlay" id="modal-4" onclick="closeModalOnOverlay(event, 'modal-4')">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal('modal-4')">✕</button>
+            <h3>Costos</h3>
+            <p>Incluye no solo el costo inicial del material, sino también los costos de instalación, mantenimiento y disposición final. En muchos casos, materiales sostenibles presentan mayores costos iniciales, pero menores costos a largo plazo.</p>
+        </div>
+    </div>
+
+    <!-- Modal 5 -->
+    <div class="modal-overlay" id="modal-5" onclick="closeModalOnOverlay(event, 'modal-5')">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal('modal-5')">✕</button>
+            <h3>Durabilidad</h3>
+            <p>Entendida como la capacidad del material para mantener sus propiedades a lo largo del tiempo frente a agentes ambientales como humedad, radiación solar o ataques biológicos. Materiales con mayor vida útil reducen la necesidad de reemplazo, disminuyendo el consumo de recursos y la generación de residuos (Doan y otros, 2017).</p>
+        </div>
+    </div>
+
+    <!-- Modal 6 -->
+    <div class="modal-overlay" id="modal-6" onclick="closeModalOnOverlay(event, 'modal-6')">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal('modal-6')">✕</button>
+            <h3>Mantenimiento</h3>
+            <p>Se priorizan materiales que requieran bajo mantenimiento, lo cual reduce el uso de productos químicos, agua y energía durante la vida útil del proyecto.</p>
+        </div>
+    </div>
+
+    <!-- Modal 7 -->
+    <div class="modal-overlay" id="modal-7" onclick="closeModalOnOverlay(event, 'modal-7')">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal('modal-7')">✕</button>
+            <h3>Compatibilidad con el diseño</h3>
+            <p>El material debe integrarse adecuadamente con el sistema constructivo, las condiciones climáticas y los objetivos del proyecto, garantizando funcionalidad y eficiencia.</p>
+        </div>
+    </div>
+
+    <!-- Modal 8 -->
+    <div class="modal-overlay" id="modal-8" onclick="closeModalOnOverlay(event, 'modal-8')">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal('modal-8')">✕</button>
+            <h3>Resistencia al fuego</h3>
+            <p>Es un criterio determinante, especialmente en normativas de seguridad. Aunque algunos materiales ecológicos pueden presentar limitaciones en este aspecto, existen técnicas de mejora que permiten aumentar su desempeño sin comprometer su sostenibilidad.</p>
+        </div>
+    </div>
+
+    <!-- Modal 9 -->
+    <div class="modal-overlay" id="modal-9" onclick="closeModalOnOverlay(event, 'modal-9')">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal('modal-9')">✕</button>
+            <h3>Propiedades térmicas y acústicas</h3>
+            <p>Influyen directamente en el confort de los usuarios. Materiales como la lana de oveja, la fibra de coco o la celulosa reciclada ofrecen excelentes niveles de aislamiento, reduciendo la necesidad de sistemas artificiales de climatización.</p>
+        </div>
+    </div>
+
+    <script>
+        function openModal(id) {
+            document.getElementById(id).classList.add('active');
+        }
+
+        function closeModal(id) {
+            document.getElementById(id).classList.remove('active');
+        }
+
+        function closeModalOnOverlay(event, id) {
+            if (event.target === document.getElementById(id)) {
+                closeModal(id);
+            }
+        }
+
+        document.addEventListener('keydown', function (event) {
+            if (event.key === 'Escape') {
+                document.querySelectorAll('.modal-overlay.active').forEach(modal => {
+                    modal.classList.remove('active');
+                });
+            }
+        });
+
+        function toggleTheme() {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            
+            document.documentElement.setAttribute('data-theme', newTheme);
+            
+            const themeIcon = document.getElementById('themeIcon');
+            const themeText = document.getElementById('themeText');
+            
+            if (newTheme === 'dark') {
+                themeIcon.textContent = '☀️';
+                themeText.textContent = 'Modo Claro';
+            } else {
+                themeIcon.textContent = '🌙';
+                themeText.textContent = 'Modo Oscuro';
+            }
+        }
+    </script>
+
+</body>
+
+</html>
