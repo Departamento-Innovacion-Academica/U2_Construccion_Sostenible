@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Materiales de Construcción Sostenible</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* Light Theme (Eco Emerald Theme) */
+            --bg-body: #f0fdf4;
+            --bg-radial-1: rgba(16, 185, 129, 0.1);
+            --bg-radial-2: rgba(5, 150, 105, 0.08);
+            --card-bg: #ffffff;
+            --text-main: #064e3b;
+            --text-body: #1e293b;
+            --text-muted: #64748b;
+            --accent-color: #059669;
+            --accent-hover: #047857;
+            --border-color: #a7f3d0;
+            --instruction-bg: rgba(255, 255, 255, 0.9);
+            --modal-overlay-bg: rgba(6, 78, 59, 0.4);
+            --modal-bg: #ffffff;
+            --close-btn-bg: #e6f4ea;
+            --card-shadow: 0 10px 25px -5px rgba(5, 150, 105, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.03);
+            --modal-shadow: 0 25px 50px -12px rgba(6, 78, 59, 0.25);
+            --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        [data-theme="dark"] {
+            /* Dark Theme Overrides */
+            --bg-body: #061a14;
+            --bg-radial-1: rgba(16, 185, 129, 0.15);
+            --bg-radial-2: rgba(5, 150, 105, 0.12);
+            --card-bg: #0b2920;
+            --text-main: #a7f3d0;
+            --text-body: #e2e8f0;
+            --text-muted: #94a3b8;
+            --accent-color: #10b981;
+            --accent-hover: #34d399;
+            --border-color: #134e3a;
+            --instruction-bg: rgba(11, 41, 32, 0.9);
+            --modal-overlay-bg: rgba(2, 20, 15, 0.8);
+            --modal-bg: #0b2920;
+            --close-btn-bg: #134e3a;
+            --card-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.4);
+            --modal-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+        }
+
+        body {
+            background-color: var(--bg-body);
+            background-image: radial-gradient(at 0% 0%, var(--bg-radial-1) 0px, transparent 50%),
+                              radial-gradient(at 100% 100%, var(--bg-radial-2) 0px, transparent 50%);
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            color: var(--text-body);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 90px 20px 40px;
+            box-sizing: border-box;
+            transition: var(--transition-smooth);
+        }
+
+        .top-bar {
+            position: fixed;
+            top: 20px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            z-index: 10;
+        }
+
+        .instruction {
+            background: var(--instruction-bg);
+            padding: 10px 24px;
+            border-radius: 9999px;
+            border: 1px solid var(--border-color);
+            color: var(--accent-color);
+            font-size: 0.85rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            animation: floatAnim 4s ease-in-out infinite;
+            backdrop-filter: blur(12px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            transition: var(--transition-smooth);
+        }
+
+        .theme-toggle-btn {
+            background: var(--instruction-bg);
+            border: 1px solid var(--border-color);
+            color: var(--accent-color);
+            border-radius: 9999px;
+            padding: 10px 18px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            backdrop-filter: blur(12px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            transition: var(--transition-smooth);
+        }
+
+        .theme-toggle-btn:hover {
+            transform: translateY(-2px);
+            border-color: var(--accent-color);
+        }
+
+        @keyframes floatAnim {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-5px);
+            }
+        }
+
+        .cards-container {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+            max-width: 1050px;
+            width: 100%;
+        }
+
+        .row-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            width: 100%;
+        }
+
+        .row-2 {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 24px;
+            width: 100%;
+        }
+
+        @media (max-width: 850px) {
+            .row-3, .row-2 {
+                grid-template-columns: 1fr;
+            }
+            .top-bar {
+                flex-direction: column;
+                gap: 8px;
+                top: 10px;
+            }
+            body {
+                padding-top: 130px;
+            }
+        }
+
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-top: 4px solid var(--accent-color);
+            border-radius: 16px;
+            padding: 28px 24px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: flex-start;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+            box-shadow: var(--card-shadow);
+            min-height: 180px;
+            box-sizing: border-box;
+        }
+
+        .card:hover {
+            border-color: var(--accent-color);
+            transform: translateY(-4px);
+            box-shadow: 0 20px 30px -10px rgba(5, 150, 105, 0.18);
+        }
+
+        .card h3 {
+            margin: 0;
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--text-main);
+            line-height: 1.4;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            hyphens: auto;
+        }
+
+        .card .btn-open {
+            margin-top: 20px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: var(--accent-color);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: var(--transition-smooth);
+        }
+
+        .card:hover .btn-open {
+            color: var(--accent-hover);
+            transform: translateX(4px);
+        }
+
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: var(--modal-overlay-bg);
+            backdrop-filter: blur(6px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition-smooth);
+            z-index: 100;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-content {
+            background: var(--modal-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            max-width: 600px;
+            width: 100%;
+            max-height: 85vh;
+            overflow-y: auto;
+            padding: 36px 32px;
+            box-sizing: border-box;
+            position: relative;
+            transform: translateY(20px) scale(0.96);
+            transition: var(--transition-smooth);
+            box-shadow: var(--modal-shadow);
+        }
+
+        .modal-overlay.active .modal-content {
+            transform: translateY(0) scale(1);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: var(--close-btn-bg);
+            border: none;
+            color: var(--text-muted);
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            font-size: 1.1rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: var(--transition-smooth);
+        }
+
+        .modal-close:hover {
+            background: var(--accent-color);
+            color: #ffffff;
+        }
+
+        .modal-content h3 {
+            margin-top: 0;
+            margin-bottom: 20px;
+            font-size: 1.35rem;
+            font-weight: 700;
+            color: var(--text-main);
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 14px;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            hyphens: auto;
+        }
+
+        .modal-content p {
+            font-size: 1rem;
+            line-height: 1.7;
+            color: var(--text-body);
+            margin: 0;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            hyphens: auto;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="top-bar">
+        <div class="instruction">Haga clic sobre las tarjetas para ampliar la información</div>
+        <button class="theme-toggle-btn" id="themeToggleBtn" onclick="toggleTheme()">
+            <span id="themeIcon">🌙</span> <span id="themeText">Modo Oscuro</span>
+        </button>
+    </div>
+
+    <div class="cards-container">
+        
+        <!-- Top row: 3 cards -->
+        <div class="row-3">
+            <div class="card" onclick="openModal('modal-1')">
+                <h3>Guadua</h3>
+                <div class="btn-open">Ver detalle ↗</div>
+            </div>
+
+            <div class="card" onclick="openModal('modal-2')">
+                <h3>Tierra (adobe y tapia pisada)</h3>
+                <div class="btn-open">Ver detalle ↗</div>
+            </div>
+
+            <div class="card" onclick="openModal('modal-3')">
+                <h3>Madera certificada</h3>
+                <div class="btn-open">Ver detalle ↗</div>
+            </div>
+        </div>
+
+        <!-- Bottom row: 2 cards -->
+        <div class="row-2">
+            <div class="card" onclick="openModal('modal-4')">
+                <h3>Piedra natural</h3>
+                <div class="btn-open">Ver detalle ↗</div>
+            </div>
+
+            <div class="card" onclick="openModal('modal-5')">
+                <h3>Fibras naturales (como fique o palma)</h3>
+                <div class="btn-open">Ver detalle ↗</div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Modal 1 -->
+    <div class="modal-overlay" id="modal-1" onclick="closeModalOnOverlay(event, 'modal-1')">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal('modal-1')">✕</button>
+            <h3>Guadua</h3>
+            <p>Ampliamente utilizada en regiones como el Eje Cafetero, es un material renovable, resistente y de rápido crecimiento, ideal para estructuras livianas.</p>
+        </div>
+    </div>
+
+    <!-- Modal 2 -->
+    <div class="modal-overlay" id="modal-2" onclick="closeModalOnOverlay(event, 'modal-2')">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal('modal-2')">✕</button>
+            <h3>Tierra (adobe y tapia pisada)</h3>
+            <p>Empleada en zonas rurales, presenta alta inercia térmica, lo que contribuye al confort térmico interior.</p>
+        </div>
+    </div>
+
+    <!-- Modal 3 -->
+    <div class="modal-overlay" id="modal-3" onclick="closeModalOnOverlay(event, 'modal-3')">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal('modal-3')">✕</button>
+            <h3>Madera certificada</h3>
+            <p>Utilizada en diversas regiones del país, especialmente en zonas forestales, siempre que provenga de fuentes sostenibles.</p>
+        </div>
+    </div>
+
+    <!-- Modal 4 -->
+    <div class="modal-overlay" id="modal-4" onclick="closeModalOnOverlay(event, 'modal-4')">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal('modal-4')">✕</button>
+            <h3>Piedra natural</h3>
+            <p>Disponible en distintas regiones, utilizada en cimentaciones, muros y acabados, con alta durabilidad.</p>
+        </div>
+    </div>
+
+    <!-- Modal 5 -->
+    <div class="modal-overlay" id="modal-5" onclick="closeModalOnOverlay(event, 'modal-5')">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal('modal-5')">✕</button>
+            <h3>Fibras naturales (como fique o palma)</h3>
+            <p>Empleadas en acabados, refuerzos y elementos decorativos, con bajo impacto ambiental.</p>
+        </div>
+    </div>
+
+    <script>
+        function openModal(id) {
+            document.getElementById(id).classList.add('active');
+        }
+
+        function closeModal(id) {
+            document.getElementById(id).classList.remove('active');
+        }
+
+        function closeModalOnOverlay(event, id) {
+            if (event.target === document.getElementById(id)) {
+                closeModal(id);
+            }
+        }
+
+        document.addEventListener('keydown', function (event) {
+            if (event.key === 'Escape') {
+                document.querySelectorAll('.modal-overlay.active').forEach(modal => {
+                    modal.classList.remove('active');
+                });
+            }
+        });
+
+        function toggleTheme() {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            
+            document.documentElement.setAttribute('data-theme', newTheme);
+            
+            const themeIcon = document.getElementById('themeIcon');
+            const themeText = document.getElementById('themeText');
+            
+            if (newTheme === 'dark') {
+                themeIcon.textContent = '☀️';
+                themeText.textContent = 'Modo Claro';
+            } else {
+                themeIcon.textContent = '🌙';
+                themeText.textContent = 'Modo Oscuro';
+            }
+        }
+    </script>
+
+</body>
+
+</html>
